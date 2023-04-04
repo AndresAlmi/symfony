@@ -1,0 +1,46 @@
+{{ form_start(form) }}
+    {% set select = true %}
+    <div class="row">
+        <div class="col-6">
+            {% if form.name is defined %}
+                {{ form_label(form.name)}}
+                {{ form_widget(form.name) }}
+            {% endif %}
+        </div>
+        <div class="col-6">
+            {% if form.code is defined %}
+                {{ form_label(form.code) }}
+                {{ form_widget(form.code) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {% if form.category.name is defined %}
+                {% set select = false %}
+                {{ form_label(form.category.name) }}
+                {{ form_widget(form.category.name) }}
+            {% endif %}
+        </div>
+        <div class="col-6">
+            {% if form.category.code is defined %}
+                {{ form_label(form.category.code) }}
+                {{ form_widget(form.category.code) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {% if form.category is defined and select == true %}
+                {{ form_label(form.category) }}
+                {{ form_widget(form.category) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row mt-5">
+        {% if form.save is defined %}
+            {{ form_widget(form.save) }}
+        {% endif %}
+    </div>
+    
+{{ form_end(form) }}

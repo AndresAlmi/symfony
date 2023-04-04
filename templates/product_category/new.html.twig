@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Product Category{% endblock %}
+
+{% block body %}
+    <h1>Nuevo Product Category</h1>
+    <div class="row justify-content-md-start mb-5">
+        <a class="col-3 btn btn-secondary" href="{{ path('app_product_category_index') }}">Volver</a>
+    </div>
+    {{ include('product_category/_form.html.twig') }}
+
+{% endblock %}

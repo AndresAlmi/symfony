@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar{% endblock %}
+
+{% block body %}
+    <h1>Editar</h1>
+    <div class="row justify-content-between">
+        <a class="col-3 btn btn-secondary" href="{{ path('app_product_category_index') }}">Volver</a>
+        <div class="col-3 btn btn-danger">
+            {{ include('product_category/_delete_form.html.twig') }}
+        </div>
+    </div>
+    {{ include('product_category/_form.html.twig') }}
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-6">
+            {% if form.name is defined %}
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+            {% endif %}
+        </div>
+        <div class="col-6">
+            {% if form.name is defined %}
+                {{ form_label(form.code) }}
+                {{ form_widget(form.code) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row mt-5">
+        <button class="btn btn-primary">{{ button_label|default('Guardar') }}</button>
+    </div>
+{{ form_end(form) }}
