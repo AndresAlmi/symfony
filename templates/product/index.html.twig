@@ -5,8 +5,8 @@
 {% block body %}
     <h1>Producto</h1>
     <div class="row justify-content-between">
-        <a class="col-3 btn btn-primary" href="{{ path('app_product_new') }}">Crear Nuevo</a><br>
-        <a class="col-3 btn btn-secondary" href="{{ path('app_product_new_v2') }}">Crear Nuevo Con Select</a>
+        <a class="col-3 btn btn-primary" href="{{ path('app_product_create') }}">Crear Nuevo</a><br>
+        <a class="col-3 btn btn-primary" href="{{ path('app_product_create', {'selectized': true}) }}">Crear con select</a>
     </div>
     
     <table class="table">
@@ -35,8 +35,8 @@
                     <td>{{ product.category }}</td>
                 {% endif %}
                 <td>
-                    <a class="btn" href="{{ path('app_product_show', {'id': product.id}) }}">mostrar</a>
-                    <a class="btn" href="{{ path('app_product_edit', {'id': product.id}) }}">editar</a>
+                    <a class="btn" href="{{ path('app_product_create', {'id': product.id}) }}">editar</a>
+                    <a class="btn" href="{{ path('app_product_create', {'id': product.id, 'selectized': true}) }}">editar con select</a>
                 </td>
             </tr>
         {% else %}

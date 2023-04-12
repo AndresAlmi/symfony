@@ -21,78 +21,43 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProductRepository $productRepository): Response
+    #[Route('/create', name: 'app_product_create', methods: ['GET', 'POST'])]
+    public function create(Request $request, ProductRepository $productRepository): Response
     {
         $product = new Product();
 
-        $form = $this->createForm(ProductType::class, $product);
+        $message = null;
+
+        $options = false;
+
+        if($request->query->get('id')){
+            $product = $productRepository->find($request->query->get('id'));
+        }
+
+        if($request->query->get('selectized')){
+            $options = true;
+        }
+
+        $form = $this->createForm(ProductType::class, $product, [
+            'options' => $options
+        ]);
+
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $productRepository->save($product, true);
+        if ($form->isSubmitted()) {
+            if($form->isValid()) {
+                $productRepository->save($product, true);
 
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
-        }
+                return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+            }
 
-        return $this->renderForm('product/new.html.twig', [
+            $message = "form invalid";
+        } 
+
+        return $this->renderForm('product/create.html.twig', [
             'product' => $product,
-            'form' => $form,
+            'form'    => $form,
+            'message' => $message,
         ]);
-    }
-
-    #[Route('/new_v2', name: 'app_product_new_v2', methods: ['GET', 'POST'])]
-    public function new_v2(Request $request, ProductRepository $productRepository): Response
-    {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product, ['categorys' => true]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $productRepository->save($product, true);
-
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('product/new.html.twig', [
-            'product' => $product,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
-    {
-        return $this->render('product/show.html.twig', [
-            'product' => $product,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
-    {
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $productRepository->save($product, true);
-
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('product/edit.html.twig', [
-            'product' => $product,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
-    public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            $productRepository->remove($product, true);
-        }
-
-        return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
 }

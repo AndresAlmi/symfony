@@ -28,7 +28,7 @@ class ProductType extends AbstractType
 
         $builder->add('category', ProductCategoryType::class,[]);
 
-        if($options['categorys'] != false){
+        if($options['options']){
             $builder->add('category', EntityType::class,[
                 'class' => \App\Entity\ProductCategory::class
             ]);
@@ -42,7 +42,7 @@ class ProductType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Product::class,
-            'categorys' => false
+            'options' => false
         ]);
     }
 
